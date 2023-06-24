@@ -1,0 +1,808 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Resonance Measurer</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f7c6b926-6650-408c-a810-8b77ac047cb4" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/gradients_10.jpg" style="object-position:center 40%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🔊</span></div><h1 class="page-title">Resonance Measurer</h1><p class="page-description"></p></header><div class="page-body"><h1 id="107371fc-b27d-4120-85e7-fad0dc343c33" class="">Resonance Measurer Program Explanation</h1><p id="02915176-8e00-40b4-a8d7-fe26c3118515" class="">This program&#x27;s purpose it to measure a model&#x27;s resonance frequency, and collect data.</p><ul id="611738b5-3a70-4266-a6ac-715446d76732" class="toggle"><li><details open=""><summary>Imports</summary><h1 id="45610c69-1c1f-4301-a17d-644eb083a394" class="">Imports</h1><p id="87b204c5-44fc-4429-b495-26d459af934d" class="">The program uses a few imports.</p><pre id="b39dc5e6-e758-4514-baf8-17602e24db55" class="code"><code>import pyvisa, PySimpleGUI as sg, matplotlib.pyplot as plt, os
+from time import sleep
+from datetime import datetime</code></pre><ul id="52bde2c7-8bf9-4786-8e46-0ec9514720c4" class="toggle"><li><details open=""><summary>Among them are:</summary><p id="4101b3aa-0bc8-4189-916d-5b832c87025f" class="">-time</p><p id="2eed9bad-c202-4d70-a063-067eba561762" class="">-os</p><p id="aa4c94e2-aad5-45fc-985b-8e1a1274ca81" class="">-datetime</p><p id="6acd1ea0-6dc1-41be-b45f-0c1ee158692b" class="">-PySimpleGUI (install)</p><p id="c7fd773c-e869-4cd3-848b-88e149cb88f8" class="">-matplotlib (install)</p><p id="9d6bad11-31f5-4fe3-bddf-c7c6d3d49484" class="">-pyvisa (install)</p></details></li></ul></details></li></ul><ul id="608912c3-c31b-49b6-bb3b-923b7082d2d1" class="toggle"><li><details open=""><summary>Initialization</summary><p id="71f4e210-663a-4232-a4f9-683a00f8be42" class="">Here we start the program. First we get all </p><pre id="52881eb9-64ef-45a5-94c1-e12f858f8562" class="code"><code>rm = pyvisa.ResourceManager() # Get connected devices
+print(rm.list_resources()) # Print all connected devices
+try: # Try to check for default values
+    amplifier_port = &quot;ASRL8::INSTR&quot;
+    oscil_port = &quot;USB0::0x1AB1::0x04CE::DS1ZA161450725::INSTR&quot;
+    amplifier = rm.open_resource(amplifier_port)
+    oscil = rm.open_resource(oscil_port)
+except Exception:
+    print(&quot;Default amplifier/oscillator ports not found. If program is working as intended ignore this error.&quot;)
+    amplifier_port, oscil_port = &quot;&quot;, &quot;&quot;
+    amplifier, oscil = 0,0</code></pre></details></li></ul><ul id="c73b2de4-68d1-4eab-8fe2-507e3e36096c" class="toggle"><li><details open=""><summary>UI</summary><p id="20108ac4-4d01-40a3-ba17-9ab59e8a0319" class="">The UI of the program. Each line in this code represents a line of the UI.</p><pre id="124edb4c-c296-4a3b-881b-9caf840e155b" class="code"><code>sg.set_options(font=(&quot;Courier&quot;,15))
+sg.theme(&#x27;NeutralBlue&#x27;)
+FrequencyController = [
+    [sg.Text(&quot;Start Frequency &quot;, size=(15,1)), sg.InputText(default_text=&quot;400&quot;, key=&quot;StartFreq&quot;, size=(10,1))],
+    [sg.Text(&quot;End Frequency&quot;, size=(15,1)), sg.InputText(default_text=&quot;1000&quot;, key=&quot;EndFreq&quot;, size=(10,1))],
+    [sg.Text(&quot;Delta&quot;, size=(15,1)), sg.InputText(default_text=&quot;25&quot;, key=&quot;DeltaFreq&quot;, size=(10,1))],
+    [sg.Text(&quot;Delay (s)&quot;, size=(15,1)), sg.InputText(default_text=&quot;1&quot;, key=&quot;TimePerFreq&quot;, size=(10,1))],
+    [sg.Text(&quot;Vel Range&quot;, size=(15,1)), sg.InputText(default_text=&quot;25&quot;, key=&quot;VelRange&quot;, size=(10,1))],
+    [sg.Button(&quot;Range&quot;), sg.Button(&quot;Init&quot;), sg.Button(&quot;Next&quot;)]
+]
+FileBrowser = [
+    [sg.Text(&quot;File Path&quot;, size=(15,1)), sg.Input(size=(10,1), key=&quot;Path&quot;), sg.FolderBrowse(&quot;Browse&quot;, size=(10,1))],
+    [sg.Text(&quot;File Name&quot;, size=(15,1)), sg.Input(default_text=&quot;$m30C&quot;, key=&quot;Filename&quot;, size=(10,1)), sg.Button(&quot;Open&quot;, size=(10,1))]
+]
+AmplifierSelector = [
+    [sg.Text(&quot;Amplifier Port:&quot;)],
+    [sg.Combo([port for port in rm.list_resources()], default_value=amplifier_port, key=&quot;amplifier_port_selected&quot;, enable_events=True, size=(15,1))]
+]
+OscilSelector = [
+    [sg.Text(&quot;Oscilloscope Port:&quot;)],
+    [sg.Combo([port for port in rm.list_resources()], default_value=oscil_port, key=&quot;oscil_port_selected&quot;, enable_events=True, size=(15,1))]
+]
+Options = [
+    [sg.Radio(&quot;Vel&quot;, &quot;LDV&quot;, default=True, key=&quot;LDV_mode_vel&quot;, enable_events=True), sg.Radio(&quot;Disp&quot;, &quot;LDV&quot;, key=&quot;LDV_mode_disp&quot;, enable_events=True), sg.Text(&quot;|&quot;), sg.Checkbox(&quot;Save AC?&quot;, default=True, key=&quot;saveAC&quot;)]
+]
+Channels = [
+    [sg.Text(&quot;Oscillator Channels:&quot;)],
+    [sg.Text(&quot;Amp&quot;),sg.Input(default_text=1,size=(4,1), key=&quot;ampChannel&quot;), sg.Text(&quot;AC1&quot;),sg.Input(default_text=2,size=(4,1), key=&quot;ac1Channel&quot;), sg.Text(&quot;AC2&quot;),sg.Input(default_text=3,size=(4,1), key=&quot;ac2Channel&quot;)]
+]
+
+
+layout = [FrequencyController[:], [sg.Text(&quot;-&quot;*40)], FileBrowser[:], [sg.Text(&quot;-&quot;*40)], AmplifierSelector[:], OscilSelector[:], Options[:], [sg.Text(&quot;-&quot;*40)], Channels[:]]
+window = sg.Window(&#x27;Resonance Measurer&#x27;, layout, finalize=True, resizable=True, grab_anywhere=True)</code></pre></details></li></ul><ul id="7220472a-a571-4716-9b64-2e4ba80c224d" class="toggle"><li><details open=""><summary>Unit Conversion</summary><p id="3a8fa6cf-c70f-487e-ba72-8e91d5fd5aff" class="">The oscilloscope returns the velocity of the membrane from the LDV in Volt units. We need to translate those units to the velocity or displacement of the membrane.</p><p id="e59d806a-4517-4620-bbdb-a760e8daabd6" class="">To do that we have the following to functions:</p><pre id="f4949b49-091e-41af-82b6-84c41edde3a9" class="code"><code>def vamp2disp(vel, freq):
+    global vel_range
+    return vel*1000*vel_range / (4*3.14*freq)
+
+def damp2disp(disp):
+    return disp/2*disp_range</code></pre></details></li></ul><ul id="d6250216-3f71-4168-adba-e231ad82bc52" class="toggle"><li><details open=""><summary>Main Loop</summary><p id="cf493d65-d911-4442-b736-098a32b38bfa" class="">The PySimpleGUI program operates on a window that has to be initialized (we&#x27;ve done that), and a &#x27;main loop&#x27; that handles all inputs (e.g. input boxes, radios, combo boxes) and events (e.g. button presses, slider movements, selections). Here is the loop:</p><pre id="2e0fd8b9-3683-4a1e-8597-1c24ac90f21d" class="code"><code>while True:
+    event, values = window.read(timeout=200)
+    if event == sg.WIN_CLOSED:
+        break
+    elif event == &quot;Range&quot;:
+        collect_data(values)
+    elif event == &quot;Next&quot;:
+        current_freq = amplifier.query_ascii_values(&quot;FREQ?&quot;)[0]
+        amplifier.write(&quot;FREQ %d&quot; % (current_freq + int(values[&quot;DeltaFreq&quot;])))
+    elif event == &quot;Init&quot;:
+        amplifier.write(&quot;FREQ %d&quot; % int(values[&quot;StartFreq&quot;]))
+    elif event == &quot;amplifier_port_selected&quot;:
+        amplifier = rm.open_resource(values[&quot;amplifier_port_selected&quot;])
+        sg.Popup(&quot;*IDN?&quot;, str(amplifier.query(&quot;*IDN?&quot;)))
+    elif event == &quot;oscil_port_selected&quot;:
+        oscil = rm.open_resource(values[&quot;oscil_port_selected&quot;])
+        sg.Popup(&quot;*IDN?&quot;, str(oscil.query(&quot;*IDN?&quot;)))
+    elif event in [&quot;LDV_mode_vel&quot;, &quot;LDV_mode_disp&quot;]:
+        LDV_mode = event.split(&quot;_&quot;)[-1]
+    elif event == &quot;Open&quot;:
+        path = values[&quot;Path&quot;]
+        path = os.path.realpath(path)
+        os.startfile(path)</code></pre><p id="624566e3-af35-4b59-9a83-4a4dcea68e24" class="">The events are handled here, for example, when selecting an amplifier port &#x27;amplifier_port_selected&#x27; event will trigger and get the amplifier instrument using pyvisa.</p></details></li></ul><ul id="b62cb65a-0c98-46f9-8eca-b185cdb665cd" class="toggle"><li><details open=""><summary>Range Data Collection</summary><p id="31782f8b-376e-440b-b979-7e635b9ffb08" class="">When pressing the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi>a</mi><mi>n</mi><mi>g</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">Range</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">an</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span></span></span></span></span><span>﻿</span></span> button, the collect_data() function is ran.</p><p id="57b0ec5f-b1fc-46b8-b017-6ba11f80a18c" class="">First we get the values passed in from the window, and initialize the lists to store the data:</p><pre id="424f70eb-58d5-4387-8444-4109de63a5b3" class="code"><code>vel_range = int(values[&quot;VelRange&quot;]) # Initialize data storage
+freq_list = []
+amp_list = []
+disp_list = []
+ac1_list = []
+ac2_list = []
+try: # Get window values
+    sf = int(values[&quot;StartFreq&quot;])
+    ef = int(values[&quot;EndFreq&quot;])
+    df = int(values[&quot;DeltaFreq&quot;])
+    t = float(values[&quot;TimePerFreq&quot;])
+except:
+    sg.Popup(&quot;Error&quot;, &quot;Invalid Data Types: Need to be {Int, Int, Int, Float}&quot;)
+    return</code></pre><p id="66649938-5dfb-4cd4-8f49-596c38fbc7fc" class="">Next we need to loop over the Frequency values and send them to the lock-in-amplifier. Then we get the Amplitude values back from the oscilloscope in voltage, and translate them using the unit conversion functions.</p><pre id="6e400c84-c07f-43dc-8980-6e355d441607" class="code"><code>for freq in range(sf, ef+1, df):
+		amplifier.write(&quot;FREQ %d&quot; % freq) # Set amplifier frequency
+		freq_list.append(freq) # add current frequency
+		oscil.write(&#x27;:SINGle&#x27;) # Update oscilloscope
+		amp_list.append(oscil.query_ascii_values(&#x27;:MEASure:ITEM? Vpp,CHANnel&#x27;+values[&quot;ampChannel&quot;])[0]) # Read oscilloscope vel amplitude
+		if values[&quot;saveAC&quot;]: # Save AC current from oscilloscope
+		    ac1_list.append(oscil.query_ascii_values(&#x27;:MEASure:ITEM? Vpp,CHANnel&#x27;+values[&quot;ac1Channel&quot;])[0])
+		    ac2_list.append(oscil.query_ascii_values(&#x27;:MEASure:ITEM? Vpp,CHANnel&#x27;+values[&quot;ac2Channel&quot;])[0])
+		disp = vamp2disp(amp_list[-1],freq) if LDV_mode==&quot;vel&quot; else damp2disp(amp_list[-1]) # translate to correct units
+		disp_list.append(disp) # add final value to list
+		sleep(t) # (delay between measurements)</code></pre><p id="b9de84ab-f9d9-4317-a9d7-f97847be4164" class="">To do that, we use the pyvisa library.</p><p id="7d4af311-fe85-4f52-9e46-afc9ae3c3490" class="">Then we filter the values to remove ones which don&#x27;t fit (too big/small, those occur when the oscilloscope range doesn&#x27;t match the values).  We also calculate some values such as <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">I_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">f_r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>,  and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi></mrow><annotation encoding="application/x-tex">Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">Q</span></span></span></span></span><span>﻿</span></span> (I won&#x27;t go over the calculation.)</p><p id="09a0b014-44f3-4350-bea6-27666c9d3052" class="">
+</p><p id="7159161f-26ac-46e0-ad47-7649c170a939" class="">Finally, we save the values to a text file. We print in the initial time and table columns, then loop over the frequency/amplitude values to print them (also AC).</p><pre id="77fe29dd-b6b0-4387-889e-8deae5a3fc61" class="code"><code>filename =  values[&quot;Path&quot;] + &quot;/&quot; + values[&quot;Filename&quot;] + &quot;.txt&quot;
+filename = filename.replace(&quot;$m&quot;, LDV_mode)
+filename = filename.replace(&quot;$t&quot;, str(datetime.now().strftime(&quot;%H.%M&quot;)))
+file = open(filename, &quot;w&quot;)
+file.write(datetime.now().strftime(&quot;%d/%m/%Y %H:%M:%S&quot;) + &quot;\n&quot;)
+file.write(&quot;Temp [C] =	\n&quot;)
+file.write(&quot;fr [Hz] =	&quot; + str(fr) + &quot;\n&quot;)
+file.write(&quot;Q = &quot; + str(qfactor) + &quot;\n&quot;)
+file.write(&quot;f[Hz]	A[V]	A [µm]\n&quot;)
+for i in range(len(freq_list)):
+    file.write(str(freq_list[i]) + &quot;	&quot; + str(amp_list[i]) + &quot;	&quot; + str(disp_list[i]) + &quot;\n&quot;)
+if values[&quot;saveAC&quot;]:
+    file.write(&quot;\n\nAC:\nAC[V]	AC[V]\n&quot;)
+    for i in range(len(ac1_list)):
+        file.write(str(ac1_list[i]) + &quot;	&quot; + str(ac2_list[i]) + &quot;\n&quot;)</code></pre></details></li></ul><ul id="3dcedbc2-45df-45c2-a950-60170c4f9bbb" class="toggle"><li><details open=""><summary>Closing the Program</summary><p id="d74749e9-2cc4-448e-84be-10f76981cb5a" class="">When closing the program we need to close the ports of the scientific instruments (amplifier+ oscilloscope currently), so that next time we try to use them they won&#x27;t print an error because they&#x27;re already being used by another program (ours).</p><pre id="db06331a-134f-4dba-a3dd-20f1efe714c1" class="code"><code>try:
+    oscil.close()
+    amplifier.close()
+except:
+    print(&quot;Invalid oscillator/amplifier ports.&quot;)
+window.close()</code></pre><p id="1129d391-1b06-4867-a648-72650e12935e" class="">Final finally, we close the window.</p><p id="1e538e67-5fbe-4cc9-a6d8-d7c0717e0edd" class="">
+</p></details></li></ul><p id="1899aae4-cd40-4c8c-9413-a81f5e972bf5" class="">
+</p><h2 id="efcda162-2d91-4c2a-9a0a-75209a8dd73c" class="">External Libraries to Install</h2><p id="58e4829a-8a53-4436-bcfe-43ebd9852933" class="">To install external libraries, you can use</p><pre id="dda30e99-f171-427c-ab3a-e1d4ac59fad0" class="code"><code>pip install &lt;library_name&gt;</code></pre><p id="b0990579-57de-4e69-851b-a91d21bb2a43" class="">You will need to have python installed for this.</p><p id="58853e01-b255-436f-91e5-97a73045fc71" class="">⚠️ <strong>Microsoft python does not work</strong> for some reason with the pyvisa library, which is necessary to send and receive signals from the scientific instruments. Install python &lt;<a href="https://www.python.org/downloads/">here</a>&gt; and NOT on the Microsoft store. If you have &#x27;Microsoft python&#x27;, uninstall it then install python from the official website.</p><ul id="26be0b3e-55a7-477f-aa18-7f4d76ce0d7e" class="toggle"><li><details open=""><summary>The following libraries are needed for the program to run.</summary><ul id="c81108e6-e233-4bd8-8265-4fed0dbf141d" class="bulleted-list"><li style="list-style-type:disc">matplotlib</li></ul><ul id="6d076d5a-b704-40ae-9e93-c2672da2a519" class="bulleted-list"><li style="list-style-type:disc">PySimpleGUI</li></ul><ul id="7d6c8115-3bc6-4c92-bd01-3ed595aeb2f0" class="bulleted-list"><li style="list-style-type:disc">pyvisa</li></ul><ul id="2ffe969e-b986-435d-a84e-db5f76e3a01f" class="bulleted-list"><li style="list-style-type:disc">pyvisa-py</li></ul><ul id="3aff0de4-f1f3-4e97-baae-333d688db9b7" class="bulleted-list"><li style="list-style-type:disc">PySerial</li></ul><ul id="4634560d-dca5-44c1-b82c-e1e57e8eef37" class="bulleted-list"><li style="list-style-type:disc">PyUSB</li></ul><ul id="1709d134-7f76-4662-84ab-c3cde4e738e0" class="bulleted-list"><li style="list-style-type:disc">libusb1</li></ul></details></li></ul><p id="78c0c6d5-5100-4b00-bad3-7856f182d3f0" class="">
+</p><div id="a297bd33-2399-4dda-9a87-28acb6796022" class="collection-content"><h4 class="collection-title">File Versions</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M0.637695 13.1914C1.0957 13.1914 1.32812 13 1.47852 12.5215L2.24414 10.3887H6.14746L6.90625 12.5215C7.05664 13 7.2959 13.1914 7.74707 13.1914C8.22559 13.1914 8.5332 12.9043 8.5332 12.4531C8.5332 12.2891 8.50586 12.1523 8.44434 11.9678L5.41602 3.79199C5.2041 3.21777 4.82129 2.9375 4.19922 2.9375C3.60449 2.9375 3.21484 3.21777 3.0166 3.78516L-0.0322266 12.002C-0.09375 12.1797 -0.121094 12.3232 -0.121094 12.4668C-0.121094 12.918 0.166016 13.1914 0.637695 13.1914ZM2.63379 9.12402L4.17871 4.68066H4.21973L5.76465 9.12402H2.63379ZM12.2793 13.2324C13.3115 13.2324 14.2891 12.6787 14.7129 11.8037H14.7402V12.5762C14.7471 12.9863 15.0273 13.2393 15.4238 13.2393C15.834 13.2393 16.1143 12.9795 16.1143 12.5215V8.00977C16.1143 6.49902 14.9658 5.52148 13.1543 5.52148C11.7666 5.52148 10.6592 6.08887 10.2695 6.99121C10.1943 7.15527 10.1533 7.3125 10.1533 7.46289C10.1533 7.81152 10.4062 8.04395 10.7686 8.04395C11.0215 8.04395 11.2129 7.94824 11.3496 7.73633C11.7529 6.99121 12.2861 6.65625 13.1064 6.65625C14.0977 6.65625 14.6992 7.20996 14.6992 8.1123V8.67285L12.5664 8.7959C10.7686 8.8916 9.77734 9.69824 9.77734 11.0107C9.77734 12.3369 10.8096 13.2324 12.2793 13.2324ZM12.6621 12.1387C11.8008 12.1387 11.2129 11.667 11.2129 10.9561C11.2129 10.2725 11.7598 9.82129 12.7578 9.75977L14.6992 9.62988V10.3203C14.6992 11.3457 13.7969 12.1387 12.6621 12.1387Z"></path></svg></span>#</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesFile"><path d="M12.5938 8.44043L7.54883 13.4854C6.26367 14.7773 4.54102 14.6475 3.44043 13.54C2.32617 12.4326 2.20312 10.7168 3.49512 9.4248L10.3926 2.52734C11.1445 1.77539 12.2725 1.63867 13.0039 2.37695C13.7422 3.11523 13.6055 4.22949 12.8535 4.98828L6.08594 11.7627C5.77832 12.0703 5.41602 11.9814 5.2041 11.7764C4.99902 11.5576 4.91016 11.2021 5.21777 10.8877L9.93457 6.1709C10.1738 5.93164 10.1875 5.58301 9.96191 5.35059C9.72949 5.13184 9.38086 5.13867 9.1416 5.37793L4.39746 10.1152C3.67285 10.8535 3.7002 11.9746 4.34961 12.624C5.05371 13.3281 6.12012 13.3145 6.8584 12.5762L13.6602 5.77441C14.9795 4.45508 14.9316 2.71875 13.7764 1.55664C12.6416 0.428711 10.8779 0.34668 9.55176 1.66602L2.61328 8.61816C0.883789 10.3477 1 12.8291 2.57227 14.4014C4.14453 15.9668 6.63281 16.0898 8.3623 14.3672L13.4414 9.28809C13.6738 9.0625 13.667 8.64551 13.4346 8.41992C13.209 8.18066 12.833 8.21484 12.5938 8.44043Z"></path></svg></span>File</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesDate"><path d="M3.29688 14.4561H12.7031C14.1797 14.4561 14.9453 13.6904 14.9453 12.2344V3.91504C14.9453 2.45215 14.1797 1.69336 12.7031 1.69336H3.29688C1.82031 1.69336 1.05469 2.45215 1.05469 3.91504V12.2344C1.05469 13.6973 1.82031 14.4561 3.29688 14.4561ZM3.27637 13.1162C2.70898 13.1162 2.39453 12.8154 2.39453 12.2207V5.9043C2.39453 5.30273 2.70898 5.00879 3.27637 5.00879H12.71C13.2842 5.00879 13.6055 5.30273 13.6055 5.9043V12.2207C13.6055 12.8154 13.2842 13.1162 12.71 13.1162H3.27637ZM6.68066 7.38086H7.08398C7.33008 7.38086 7.41211 7.30566 7.41211 7.05957V6.66309C7.41211 6.41699 7.33008 6.3418 7.08398 6.3418H6.68066C6.44141 6.3418 6.35938 6.41699 6.35938 6.66309V7.05957C6.35938 7.30566 6.44141 7.38086 6.68066 7.38086ZM8.92285 7.38086H9.31934C9.56543 7.38086 9.64746 7.30566 9.64746 7.05957V6.66309C9.64746 6.41699 9.56543 6.3418 9.31934 6.3418H8.92285C8.67676 6.3418 8.59473 6.41699 8.59473 6.66309V7.05957C8.59473 7.30566 8.67676 7.38086 8.92285 7.38086ZM11.1582 7.38086H11.5547C11.8008 7.38086 11.8828 7.30566 11.8828 7.05957V6.66309C11.8828 6.41699 11.8008 6.3418 11.5547 6.3418H11.1582C10.9121 6.3418 10.8301 6.41699 10.8301 6.66309V7.05957C10.8301 7.30566 10.9121 7.38086 11.1582 7.38086ZM4.44531 9.58203H4.84863C5.09473 9.58203 5.17676 9.50684 5.17676 9.26074V8.86426C5.17676 8.61816 5.09473 8.54297 4.84863 8.54297H4.44531C4.20605 8.54297 4.12402 8.61816 4.12402 8.86426V9.26074C4.12402 9.50684 4.20605 9.58203 4.44531 9.58203ZM6.68066 9.58203H7.08398C7.33008 9.58203 7.41211 9.50684 7.41211 9.26074V8.86426C7.41211 8.61816 7.33008 8.54297 7.08398 8.54297H6.68066C6.44141 8.54297 6.35938 8.61816 6.35938 8.86426V9.26074C6.35938 9.50684 6.44141 9.58203 6.68066 9.58203ZM8.92285 9.58203H9.31934C9.56543 9.58203 9.64746 9.50684 9.64746 9.26074V8.86426C9.64746 8.61816 9.56543 8.54297 9.31934 8.54297H8.92285C8.67676 8.54297 8.59473 8.61816 8.59473 8.86426V9.26074C8.59473 9.50684 8.67676 9.58203 8.92285 9.58203ZM11.1582 9.58203H11.5547C11.8008 9.58203 11.8828 9.50684 11.8828 9.26074V8.86426C11.8828 8.61816 11.8008 8.54297 11.5547 8.54297H11.1582C10.9121 8.54297 10.8301 8.61816 10.8301 8.86426V9.26074C10.8301 9.50684 10.9121 9.58203 11.1582 9.58203ZM4.44531 11.7832H4.84863C5.09473 11.7832 5.17676 11.708 5.17676 11.4619V11.0654C5.17676 10.8193 5.09473 10.7441 4.84863 10.7441H4.44531C4.20605 10.7441 4.12402 10.8193 4.12402 11.0654V11.4619C4.12402 11.708 4.20605 11.7832 4.44531 11.7832ZM6.68066 11.7832H7.08398C7.33008 11.7832 7.41211 11.708 7.41211 11.4619V11.0654C7.41211 10.8193 7.33008 10.7441 7.08398 10.7441H6.68066C6.44141 10.7441 6.35938 10.8193 6.35938 11.0654V11.4619C6.35938 11.708 6.44141 11.7832 6.68066 11.7832ZM8.92285 11.7832H9.31934C9.56543 11.7832 9.64746 11.708 9.64746 11.4619V11.0654C9.64746 10.8193 9.56543 10.7441 9.31934 10.7441H8.92285C8.67676 10.7441 8.59473 10.8193 8.59473 11.0654V11.4619C8.59473 11.708 8.67676 11.7832 8.92285 11.7832Z"></path></svg></span>Date</th><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M1.56738 3.25879H14.4258C14.7676 3.25879 15.0479 2.97852 15.0479 2.63672C15.0479 2.29492 14.7744 2.02148 14.4258 2.02148H1.56738C1.21875 2.02148 0.952148 2.29492 0.952148 2.63672C0.952148 2.97852 1.22559 3.25879 1.56738 3.25879ZM1.56738 6.84082H14.4258C14.7676 6.84082 15.0479 6.56055 15.0479 6.21875C15.0479 5.87695 14.7744 5.60352 14.4258 5.60352H1.56738C1.21875 5.60352 0.952148 5.87695 0.952148 6.21875C0.952148 6.56055 1.22559 6.84082 1.56738 6.84082ZM1.56738 10.4229H14.4258C14.7676 10.4229 15.0479 10.1426 15.0479 9.80078C15.0479 9.45898 14.7744 9.18555 14.4258 9.18555H1.56738C1.21875 9.18555 0.952148 9.45898 0.952148 9.80078C0.952148 10.1426 1.22559 10.4229 1.56738 10.4229ZM1.56738 14.0049H8.75879C9.10059 14.0049 9.38086 13.7246 9.38086 13.3828C9.38086 13.041 9.10742 12.7676 8.75879 12.7676H1.56738C1.21875 12.7676 0.952148 13.041 0.952148 13.3828C0.952148 13.7246 1.22559 14.0049 1.56738 14.0049Z"></path></svg></span>Comments</th></tr></thead><tbody><tr id="e2a9df73-cdb5-4e17-896c-7442ab99589a"><td class="cell-title"><a href="https://www.notion.so/1-e2a9df73cdb54e17896c7442ab99589a?pvs=21">1</a></td><td class="cell-}BnY"><span style="margin-right:6px"><a href="Resonance%20Measurer%20f7c6b9266650408ca8108b77ac047cb4/File%20Versions%20a297bd3323994dda9a8728acb6796022/1%20e2a9df73cdb54e17896c7442ab99589a/ResonanceMeasurer.py">ResonanceMeasurer.py</a></span></td><td class="cell-bwxV"><time>@September 19, 2021</time></td><td class="cell-tEUx">Added AC measuring functionality, changed UI.</td></tr><tr id="68e15c11-8d96-46e7-96bf-87d808f9aad5"><td class="cell-title"><a href="https://www.notion.so/2-68e15c118d9646e796bf87d808f9aad5?pvs=21">2</a></td><td class="cell-}BnY"></td><td class="cell-bwxV"></td><td class="cell-tEUx"></td></tr><tr id="0077093e-627b-426a-b3e3-a8f430479423"><td class="cell-title"><a href="https://www.notion.so/3-0077093e627b426ab3e3a8f430479423?pvs=21">3</a></td><td class="cell-}BnY"></td><td class="cell-bwxV"></td><td class="cell-tEUx"></td></tr><tr id="2c2bb1b0-6aa9-4749-8ec2-f361f802febb"><td class="cell-title"><a href="https://www.notion.so/4-2c2bb1b06aa947498ec2f361f802febb?pvs=21">4</a></td><td class="cell-}BnY"></td><td class="cell-bwxV"></td><td class="cell-tEUx"></td></tr><tr id="9929e7f1-872f-492c-8fb7-0131a0687170"><td class="cell-title"><a href="https://www.notion.so/5-9929e7f1872f492c8fb70131a0687170?pvs=21">5</a></td><td class="cell-}BnY"></td><td class="cell-bwxV"></td><td class="cell-tEUx"></td></tr><tr id="cd352fcc-2e33-4b0e-9480-652b630afa0c"><td class="cell-title"><a href="https://www.notion.so/6-cd352fcc2e334b0e9480652b630afa0c?pvs=21">6</a></td><td class="cell-}BnY"></td><td class="cell-bwxV"></td><td class="cell-tEUx"></td></tr><tr id="78d4ce7d-2e05-4ef3-8f16-31a6a23fdcca"><td class="cell-title"><a href="https://www.notion.so/7-78d4ce7d2e054ef38f1631a6a23fdcca?pvs=21">7</a></td><td class="cell-}BnY"></td><td class="cell-bwxV"></td><td class="cell-tEUx"></td></tr></tbody></table><br/><br/></div><p id="8be22641-f75f-4480-8b45-b7f71ce5c265" class="">
+</p><h2 id="a51c7a0d-9304-47a5-a31b-3a013832f720" class="">Variables</h2><ul id="46d3a27e-fd0f-4b9b-b453-c0aca80e9be2" class="bulleted-list"><li style="list-style-type:disc">save_ac = True/False. Whether to collect the AC data while a measurement is happening.</li></ul><p id="1f74d8c9-74a7-4d83-95ee-6982b78bb011" class="">All other variables are controlled from within the UI.</p><pre id="93c7dc8c-fcbc-4ad2-bf5d-bd89ea6309c4" class="code"><code>vel_range = 5
+disp_range = 8
+LDV_mode = &quot;vel&quot;
+save_ac = False</code></pre><p id="7e92970d-54ce-4809-92f9-6daa12250df5" class="">
+</p><h2 id="fbc5fbb7-e850-44a1-bbad-bb15a394e0a9" class="">Operating the UI</h2><h3 id="a3fd5d48-a69b-40ca-9625-70f8a4593b51" class="">Measuring</h3><ul id="bb2f537f-414c-4af2-aab0-188df47e4d7c" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Start Frequency</em></strong>, <strong><em>End Frequency</em></strong>, and <strong><em>Delta</em></strong><strong> </strong>set the range of frequencies to be sent to the amplifier. For example 400, 1000, 25 will result in  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>400</mn><mo separator="true">,</mo><mn>425</mn><mo separator="true">,</mo><mn>450...950</mn><mo separator="true">,</mo><mn>975</mn><mo separator="true">,</mo><mn>1000</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[400, 425, 450...950, 975, 1000]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">400</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">425</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">450...950</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">975</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1000</span><span class="mclose">]</span></span></span></span></span><span>﻿</span></span>.</li></ul><ul id="46d7e008-bf2c-4c62-95ea-436ac45c2b46" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Delay </em></strong>is the delay in seconds between each two frequency measurements.</li></ul><ul id="94458f3e-ff65-4852-aa18-a5ad1d293595" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Vel Range</em></strong> is the LDV velocity range (displacement range in case of Displacement mode). Input it matching the LDV mode set in the LDV settings.</li></ul><ul id="31fa40b8-c426-435f-9073-9de441a898d4" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Range</em></strong> Button will run the function collect_data() which will input the frequency range to the amplifier, collects the oscilloscope amplitude values back and saves it all to a file.</li></ul><ul id="2ae5ac85-fd41-4f21-a8bb-aef243eb450d" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Init </em></strong>Button will set the amplifier frequency to the <em>Start Frequency </em>frequency.</li></ul><ul id="bdf47343-cf13-4d1f-b6f9-e230bd4afd3d" class="bulleted-list"><li style="list-style-type:disc"><strong><em>Next </em></strong>Button will add <em>Delta </em>to the current amplifier frequency.</li></ul><p id="f78d7b7c-f33b-4e73-9ca7-522e64a90b72" class="">
+</p><h3 id="037d3b83-d944-4243-80e7-218a496e87ac" class="">File Settings</h3><ul id="a56461dc-2d6a-41f6-b73c-daa345b4fc44" class="bulleted-list"><li style="list-style-type:disc"><em><strong>File Path </strong></em>determines where the saved file from the <em>Range </em>function will output. <span style="border-bottom:0.05em solid">Cannot</span> be a shared directory (a server). Press <em>Browse </em>to set the path.</li></ul><ul id="2caebd23-b87e-42d6-90c0-86ae72b9de54" class="bulleted-list"><li style="list-style-type:disc"><em><strong>File Name</strong></em> will determine the file&#x27;s name (filename.txt). $m will be replaced the the LDV mode (vel or disp) and $t will be replaced with the time. Beware not to use the characters \ /:*?&quot;&lt;&gt;| because those cannot be in a file name (will result in an error). Press <em>Open </em>to open the text file location.</li></ul><p id="804cc6fc-62c6-475d-b3c7-7e99a48dedb9" class="">
+</p><h3 id="363f1e7c-02a8-4417-9d57-71d537bce26e" class="">Settings</h3><ul id="8aad03ac-5aa8-4e03-8502-22627131ec4f" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Amplifier Port</strong></em>, and <em><strong>Oscilloscope Port </strong></em>are a dropdown menu from which you need to select the port for the instruments. When selecting, the command <em>*IDN? </em>will be sent to the selected instrument. A popup for the result of the query will show with its reply from the instrument - that way you can know if you selected correctly. Sometimes an incorrect selection can result in an error if the instrument does not have an <em>*IDN? </em>command.</li></ul><ul id="de6df508-3cbf-4b9c-b7c9-324e64ec1b77" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Vel</strong></em>/<em><strong>Disp </strong></em>will select the LDV measurement mode.</li></ul><ul id="51d491cd-cbf0-4c71-bb66-f58507d82a67" class="bulleted-list"><li style="list-style-type:disc"><em><strong>SaveAC </strong></em>selects whether to save AC values while a measurement is happening.</li></ul><p id="81137e31-484c-4fee-b14d-b3b70e29c506" class="">
+</p><h3 id="954477fa-372b-4090-aebf-bfc96ebe119e" class="">Channels</h3><p id="649a3034-63e7-4e9e-9e91-f8ac4353af8e" class="">Input only values of 1-4. These are the channels from which the program will collect the data from the oscilloscope.</p><p id="d551ee2b-a47b-4504-bf91-e1aa6648cadd" class="">
+</p><div id="06a3643c-102d-4812-b244-804cbcdb8ffb" class="column-list"><div id="f510987a-3c00-4c50-b2ab-e3d4082d2ad2" style="width:50%" class="column"><figure id="ce46d775-7ccf-430b-b515-12d6816065d3" class="image"><a href="Resonance%20Measurer%20f7c6b9266650408ca8108b77ac047cb4/Untitled.png"><img style="width:384px" src="Resonance%20Measurer%20f7c6b9266650408ca8108b77ac047cb4/Untitled.png"/></a></figure></div><div id="662c1fd6-105e-4fbb-abc2-ed545136ab91" style="width:50%" class="column"><p id="c2c47827-43af-4a51-81e3-1334d5923201" class="">
+</p></div></div><p id="1117290a-506b-418c-9744-1bf76697089e" class="">
+</p><p id="12bdfd14-4a8f-423c-bf7f-bdfa345f28be" class="">
+</p><p id="ce0b9477-a5a3-4122-ba47-d3140cfe2326" class="">
+</p><p id="f62dfa9f-a0bb-400c-bd3e-616a4bfbf4cf" class="">
+</p><p id="61a860a2-fcea-4ae4-bc3f-b9d582a26641" class="">
+</p></div></article></body></html>
